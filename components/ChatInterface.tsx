@@ -6,7 +6,7 @@ import { Mic, MicOff } from "lucide-react";
 import { useState, useRef, useEffect } from "react";
 import { Card } from "./ui/card";
 import { expressionLabels } from "@/utils/expressionLabels";
-import { expressionColors } from "@/utils/expressionColors";
+import { expressionColors, isExpressionColor } from "@/utils/expressionColors";
 
 interface Message {
   id: string;
@@ -82,13 +82,26 @@ export default function ChatInterface({ onAccessToken }: ChatInterfaceProps) {
     setIsConnected(false);
   };
 
-  const getTopEmotions = (emotions?: { [key: string]: number }) => {
-    if (!emotions) return [];
-    return Object.entries(emotions)
-      .sort(([, a], [, b]) => b - a)
-      .slice(0, 2)
-      .map(([name, score]) => ({ name, score }));
+  const getEmotionSummary = () => {
+    if (!messages || messages.length === 0) return [];
+
+    return messages
+      .map(msg => {
+        if (!msg || typeof msg !== 'object' || !('models' in msg) || !msg.models?.prosody?.scores) return null;
+        const scores = msg.models.prosody.scores;
+        return Object.entries(scores)
+          .map(([emotion, score]) => ({
+            emotion,
+            score: Number(score)
+          }))
+          .sort((a, b) => b.score - a.score)
+          .slice(0, 3);
+      })
+      .filter(Boolean);
   };
+
+  const emotionSummaries = getEmotionSummary();
+  if (emotionSummaries.length === 0) return null;
 
   return (
     <div className="flex flex-col h-[calc(100vh-4rem)]">
@@ -118,7 +131,7 @@ export default function ChatInterface({ onAccessToken }: ChatInterfaceProps) {
                             key={emotion}
                             className="text-xs px-2 py-1 rounded-full"
                             style={{
-                              backgroundColor: expressionColors[emotion] || "#8884d8",
+                              backgroundColor: isExpressionColor(emotion) ? expressionColors[emotion] : "#8884d8",
                               color: "white"
                             }}
                           >

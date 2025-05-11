@@ -6,7 +6,7 @@ import StartCall from "../StartCall";
 import { useRef, useState } from "react";
 import { useVoice } from "@humeai/voice-react";
 import Expressions from "../Expressions";
-import { expressionColors } from "@/utils/expressionColors";
+import { expressionColors, isExpressionColor } from "@/utils/expressionColors";
 import { expressionLabels } from "@/utils/expressionLabels";
 
 export type ChatHandle = {
@@ -103,7 +103,7 @@ export default function Chat({ onEndSession }: { onEndSession: (sessionData: any
               .sort(([, a], [, b]) => (b as number) - (a as number))
               .map(([emotion, value]) => (
                 <div key={emotion} className="flex items-center gap-2">
-                  <span className="w-20 truncate text-xs" style={{color: expressionColors[emotion] || '#8884d8'}}>
+                  <span className="w-20 truncate text-xs" style={{color: isExpressionColor(emotion) ? expressionColors[emotion] : '#8884d8'}}>
                     {expressionLabels[emotion] || emotion}
                   </span>
                   <div className="flex-1 h-3 bg-muted rounded">
@@ -111,11 +111,11 @@ export default function Chat({ onEndSession }: { onEndSession: (sessionData: any
                       className="h-3 rounded transition-all duration-300"
                       style={{
                         width: `${Math.round((value as number) * 100)}%`,
-                        backgroundColor: expressionColors[emotion] || '#8884d8',
+                        backgroundColor: isExpressionColor(emotion) ? expressionColors[emotion] : '#8884d8',
                       }}
                     />
                   </div>
-                  <span className="w-10 text-right text-xs tabular-nums" style={{color: expressionColors[emotion] || '#8884d8'}}>
+                  <span className="w-10 text-right text-xs tabular-nums" style={{color: isExpressionColor(emotion) ? expressionColors[emotion] : '#8884d8'}}>
                     {((value as number) * 100).toFixed(1)}%
                   </span>
                 </div>

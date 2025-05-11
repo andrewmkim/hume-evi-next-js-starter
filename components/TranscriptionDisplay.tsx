@@ -1,6 +1,6 @@
 "use client";
 
-import { useVoice, type VoiceMessage } from "@humeai/voice-react";
+import { useVoice, type VoiceMessage, hasTranscription } from "@humeai/voice-react";
 import { Card } from "./ui/card";
 
 interface TranscriptionDisplayProps {
@@ -12,10 +12,7 @@ export default function TranscriptionDisplay({ messages }: TranscriptionDisplayP
     
   const latestMessage = messages[messages.length - 1];
   
-  // Add type guard to check if the message has models and transcription
-  if (!latestMessage || 
-      !('models' in latestMessage) || 
-      !latestMessage.models?.transcription?.text) {
+  if (!hasTranscription(latestMessage)) {
     return null;
   }
 

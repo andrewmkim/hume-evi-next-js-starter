@@ -1,4 +1,12 @@
-export const expressionColors: { [key: string]: string } = {
+type ExpressionColorKey = 
+  | 'admiration' | 'amusement' | 'anger' | 'annoyance' | 'approval'
+  | 'caring' | 'confusion' | 'curiosity' | 'desire' | 'disappointment'
+  | 'disapproval' | 'disgust' | 'embarrassment' | 'excitement' | 'fear'
+  | 'gratitude' | 'grief' | 'joy' | 'love' | 'nervousness'
+  | 'optimism' | 'pride' | 'realization' | 'relief' | 'remorse'
+  | 'sadness' | 'surprise' | 'neutral';
+
+export const expressionColors: Record<ExpressionColorKey, string> = {
   admiration: "#4CAF50",
   amusement: "#FFC107",
   anger: "#F44336",
@@ -29,8 +37,6 @@ export const expressionColors: { [key: string]: string } = {
   neutral: "#9E9E9E"
 };
 
-export const isExpressionColor = (
-  color: string
-): color is keyof typeof expressionColors => {
+export const isExpressionColor = (color: string): color is ExpressionColorKey => {
   return color in expressionColors;
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useVoice } from "@humeai/voice-react";
+import { type VoiceMessage } from "@humeai/voice-react";
 import { Card } from "./ui/card";
 import { expressionLabels } from "@/utils/expressionLabels";
 import { expressionColors } from "@/utils/expressionColors";
@@ -11,9 +11,11 @@ interface EmotionDataPoint {
   [key: string]: number;
 }
 
-export default function EmotionHistory() {
-  const { messages } = useVoice();
+interface EmotionHistoryProps {
+  messages: VoiceMessage[];
+}
 
+export default function EmotionHistory({ messages }: EmotionHistoryProps) {
   const getEmotionHistory = (): EmotionDataPoint[] => {
     if (!messages || messages.length === 0) return [];
 

@@ -1,11 +1,13 @@
 "use client";
 
-import { useVoice, type VoiceMessage } from "@humeai/voice-react";
+import { type VoiceMessage } from "@humeai/voice-react";
 import { Card } from "./ui/card";
 
-export default function TranscriptionHistory() {
-  const { messages } = useVoice();
+interface TranscriptionHistoryProps {
+  messages: VoiceMessage[];
+}
 
+export default function TranscriptionHistory({ messages }: TranscriptionHistoryProps) {
   const transcriptions = messages
     .filter((msg): msg is VoiceMessage & { models: { transcription: { text: string; confidence: number } } } => 
       'models' in msg && 

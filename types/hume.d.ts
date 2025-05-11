@@ -31,6 +31,15 @@ declare module '@humeai/voice-react' {
 
   type VoiceMessage = JSONMessage | ConnectionMessage;
 
+  // Type guard functions
+  export function isJSONMessage(message: VoiceMessage): message is JSONMessage {
+    return 'models' in message;
+  }
+
+  export function hasTranscription(message: VoiceMessage): message is JSONMessage & { models: { transcription: TranscriptionModel } } {
+    return isJSONMessage(message) && !!message.models.transcription;
+  }
+
   interface VoiceProviderProps {
     children: React.ReactNode;
     auth?: {

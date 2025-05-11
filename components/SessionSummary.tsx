@@ -6,7 +6,7 @@ import { Textarea } from "./ui/textarea";
 import { useState } from "react";
 import { RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, ResponsiveContainer } from "recharts";
 import { expressionLabels } from "@/utils/expressionLabels";
-import { expressionColors } from "@/utils/expressionColors";
+import { expressionColors, isExpressionColor } from "@/utils/expressionColors";
 
 interface Message {
   id: string;
@@ -45,7 +45,7 @@ export default function SessionSummary({ messages, onSave }: SessionSummaryProps
       .map(([emotion, sum]) => ({
         emotion: expressionLabels[emotion] || emotion,
         value: sum / emotionCounts[emotion],
-        fill: expressionColors[emotion] || "#8884d8"
+        fill: isExpressionColor(emotion) ? expressionColors[emotion] : "#8884d8"
       }))
       .sort((a, b) => b.value - a.value)
       .slice(0, 6);
@@ -111,7 +111,7 @@ export default function SessionSummary({ messages, onSave }: SessionSummaryProps
                         key={emotion}
                         className="text-xs px-2 py-1 rounded-full"
                         style={{
-                          backgroundColor: expressionColors[emotion] || "#8884d8",
+                          backgroundColor: isExpressionColor(emotion) ? expressionColors[emotion] : "#8884d8",
                           color: "white"
                         }}
                       >

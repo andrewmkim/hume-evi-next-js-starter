@@ -1,6 +1,6 @@
 "use client";
 
-import { useVoice } from "@humeai/voice-react";
+import { type VoiceMessage } from "@humeai/voice-react";
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from "recharts";
 import { Card } from "./ui/card";
 import { expressionLabels } from "@/utils/expressionLabels";
@@ -11,9 +11,11 @@ interface EmotionScore {
   score: number;
 }
 
-export default function EmotionDisplay() {
-  const { messages } = useVoice();
+interface EmotionDisplayProps {
+  messages: VoiceMessage[];
+}
 
+export default function EmotionDisplay({ messages }: EmotionDisplayProps) {
   const getLatestEmotions = (): EmotionScore[] => {
     if (!messages || messages.length === 0) return [];
     
