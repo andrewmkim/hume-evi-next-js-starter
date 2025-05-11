@@ -7,7 +7,11 @@ import { Toggle } from "./ui/toggle";
 import MicFFT from "./MicFFT";
 import { cn } from "@/utils";
 
-export default function Controls() {
+interface ControlsProps {
+  onEndSession?: () => void;
+}
+
+export default function Controls({ onEndSession }: ControlsProps) {
   const { disconnect, status, isMuted, unmute, mute, micFft } = useVoice();
 
   return (
@@ -63,6 +67,7 @@ export default function Controls() {
               className={"flex items-center gap-1"}
               onClick={() => {
                 disconnect();
+                if (onEndSession) onEndSession();
               }}
               variant={"destructive"}
             >
