@@ -4,7 +4,6 @@ import { Button } from "./ui/button";
 import { Mic, MicOff, Phone } from "lucide-react";
 import { AnimatePresence, motion } from "framer-motion";
 import { Toggle } from "./ui/toggle";
-import MicFFT from "./MicFFT";
 import { cn } from "@/utils";
 
 interface ControlsProps {
@@ -58,10 +57,6 @@ export default function Controls({ onEndSession }: ControlsProps) {
                 <Mic className={"size-4"} />
               )}
             </Toggle>
-
-            <div className={"relative grid h-8 w-48 shrink grow-0"}>
-              <MicFFT fft={micFft} className={"fill-current"} />
-            </div>
 
             <Button
               className={"flex items-center gap-1"}
