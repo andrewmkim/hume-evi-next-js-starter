@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Chat, { ChatHandle } from "@/components/ui/Chat";
 import { useRouter } from "next/navigation";
 import { VoiceProvider } from "@humeai/voice-react";
@@ -8,7 +8,6 @@ import { VoiceProvider } from "@humeai/voice-react";
 export default function SessionPage() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
   const router = useRouter();
-  const chatRef = useRef<ChatHandle | null>(null);
 
   // Automatically fetch access token and start session on mount
   useEffect(() => {
