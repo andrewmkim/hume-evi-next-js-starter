@@ -19,7 +19,7 @@ const emotionLabels: Record<string, string> = {
   disappointment: "Disappointment"
 };
 
-// Add a type guard for models
+// Type guard for messages with models
 function isMessageWithModels(msg: any): msg is { models: { prosody: { scores: Record<string, number> } } } {
   return msg && typeof msg === 'object' && 'models' in msg && msg.models?.prosody?.scores;
 }
@@ -48,4 +48,4 @@ export default function LiveEmotionChart() {
       </div>
     </div>
   );
-} 
+}
