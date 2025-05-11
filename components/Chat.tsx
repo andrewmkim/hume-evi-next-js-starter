@@ -20,7 +20,9 @@ export default function ClientComponent({
         "relative grow flex flex-col mx-auto w-full overflow-hidden h-[0px]"
       }
     >
-      <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>
+      <VoiceProvider
+        auth={{ type: "accessToken", value: accessToken }}
+      >
         <Messages ref={ref} />
         <Controls />
         <StartCall />
