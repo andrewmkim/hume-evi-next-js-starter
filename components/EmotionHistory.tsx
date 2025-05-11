@@ -18,8 +18,8 @@ export default function EmotionHistory() {
     if (!messages || messages.length === 0) return [];
 
     return messages
-      .filter(msg => msg?.models?.prosody?.scores)
       .map(msg => {
+        if (!msg || typeof msg !== 'object' || !('models' in msg) || !msg.models?.prosody?.scores) return null;
         const timestamp = new Date(msg.receivedAt).getTime();
         const scores = msg.models.prosody.scores;
         return {
@@ -29,7 +29,8 @@ export default function EmotionHistory() {
             [expressionLabels[key as keyof typeof expressionLabels] || key]: Number(value)
           }), {})
         };
-      });
+      })
+      .filter(Boolean) as EmotionDataPoint[];
   };
 
   const emotionHistory = getEmotionHistory();
