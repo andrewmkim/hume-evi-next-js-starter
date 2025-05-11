@@ -23,26 +23,7 @@ export default function ClientComponent({
         "relative grow flex flex-col mx-auto w-full overflow-hidden h-[0px]"
       }
     >
-      <VoiceProvider
-        auth={{ type: "accessToken", value: accessToken }}
-        configId={configId}
-        onMessage={() => {
-          if (timeout.current) {
-            window.clearTimeout(timeout.current);
-          }
-
-          timeout.current = window.setTimeout(() => {
-            if (ref.current) {
-              const scrollHeight = ref.current.scrollHeight;
-
-              ref.current.scrollTo({
-                top: scrollHeight,
-                behavior: "smooth",
-              });
-            }
-          }, 200);
-        }}
-      >
+      <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>
         <Messages ref={ref} />
         <Controls />
         <StartCall />
