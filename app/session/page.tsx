@@ -42,7 +42,7 @@ export default function SessionPage() {
       </div>
       {accessToken && (
         <VoiceProvider auth={{ type: "accessToken", value: accessToken }}>
-          <Chat ref={chatRef} onEndSession={handleEndSession} />
+          <Chat onEndSession={handleEndSession} />
         </VoiceProvider>
       )}
     </div>
