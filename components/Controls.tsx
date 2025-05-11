@@ -12,7 +12,7 @@ interface ControlsProps {
 }
 
 export default function Controls({ onEndSession }: ControlsProps) {
-  const { disconnect, status, isMuted, unmute, mute, micFft } = useVoice();
+  const { disconnect, status, isMuted, unmute, mute } = useVoice();
 
   return (
     <div
