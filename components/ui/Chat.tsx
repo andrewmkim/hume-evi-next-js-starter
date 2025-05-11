@@ -23,7 +23,7 @@ function hasModels(msg: any): msg is { models: { prosody: { scores: Record<strin
   return msg && typeof msg === 'object' && 'models' in msg && msg.models?.prosody?.scores;
 }
 
-export default function Chat({ onEndSession }: { onEndSession: (sessionData: any) => Promise<void> }) {
+export default function Chat({ onEndSession }: { onEndSession: (sessionData: any) => void }) {
   const innerRef = useRef<HTMLDivElement | null>(null);
   const { messages } = useVoice();
   const [showEmotions, setShowEmotions] = useState(false);

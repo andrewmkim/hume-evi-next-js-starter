@@ -4,7 +4,6 @@ import { useState, useEffect, useRef } from "react";
 import Chat, { ChatHandle } from "@/components/ui/Chat";
 import { useRouter } from "next/navigation";
 import { VoiceProvider } from "@humeai/voice-react";
-import { supabase } from "@/lib/supabaseClient";
 
 export default function SessionPage() {
   const [accessToken, setAccessToken] = useState<string | null>(null);
@@ -29,20 +28,10 @@ export default function SessionPage() {
     return () => { isMounted = false; };
   }, []);
 
-  const handleEndSession = async (sessionData: any) => {
-    // Save to Supabase
-    const { error } = await supabase.from("sessions").insert([
-      {
-        date: sessionData.date,
-        conversation: sessionData.conversation,
-        averaged_emotions: sessionData.averagedEmotions,
-        // Add other fields as needed (summary, notes, etc.)
-      }
-    ]);
-    if (error) {
-      console.error("Error saving session to Supabase:", error);
-      // Optionally show an error to the user
-    }
+  const handleEndSession = (sessionData: any) => {
+    const history = JSON.parse(localStorage.getItem("voiceVitalsSessions") || "[]");
+    history.push(sessionData);
+    localStorage.setItem("voiceVitalsSessions", JSON.stringify(history));
     router.push("/results");
   };
 
