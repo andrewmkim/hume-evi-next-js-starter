@@ -18,7 +18,7 @@ export default function EmotionDisplay() {
     if (!messages || messages.length === 0) return [];
     
     const latestMessage = messages[messages.length - 1];
-    if (!latestMessage?.models?.prosody?.scores) return [];
+    if (!latestMessage || typeof latestMessage !== 'object' || !('models' in latestMessage) || !latestMessage.models?.prosody?.scores) return [];
 
     return Object.entries(latestMessage.models.prosody.scores)
       .map(([name, score]) => ({
